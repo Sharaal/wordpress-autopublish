@@ -2,20 +2,22 @@
 // outputformat: text/plain
 header('Content-Type:text/plain');
 
-// give the last cron 15 min time to run
-$interval = getenv('INTERVAL') - (60 * 15);
-
 // load the wordpress environment
 require_once(getenv('WORDPRESS_PATH') . '/wp-load.php');
 
 // get the last published post
-$publish = get_posts(['numberposts' => 1, 'orderby' => 'post_date', 'order' => 'DESC', 'post_status' => 'publish'])[0];
-echo 'latest post:' . "\n";
-echo 'ID: ' . $publish->ID . ', title: ' . $publish->post_title . ', post_date: ' . $publish->post_date . "\n";
-if (strtotime($publish->post_date) >= (time() - $interval)) {
-    // found a post in the interval, so nothing to do
-    echo "\n" . 'Nothing to publish, found current post.' . "\n";
-    exit(0);
+$publishs = get_posts(['numberposts' => 1, 'orderby' => 'post_date', 'order' => 'DESC', 'post_status' => 'publish']);
+if (count($publishs)) {
+    $publish = $publishs[0];
+    echo 'latest post:' . "\n";
+    echo 'ID: ' . $publish->ID . ', title: ' . $publish->post_title . ', post_date: ' . $publish->post_date . "\n";
+    // give the last cron 15 min time to run
+    $interval = getenv('INTERVAL') - (60 * 15);
+    if (strtotime($publish->post_date) >= (time() - $interval)) {
+        // found a post in the interval, so nothing to do
+        echo "\n" . 'Nothing to publish, found current post.' . "\n";
+        exit(0);
+    }
 }
 
 // get the earliest pending post
