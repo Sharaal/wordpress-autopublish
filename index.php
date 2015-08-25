@@ -1,12 +1,9 @@
 <?php
-// some configs
-$interval = (60 * 60 * 24 * 7);
-
 // give the last cron 15 min time to run
-$interval -= (60 * 15);
+$interval = getenv('INTERVAL') - (60 * 15);
 
 // load the wordpress environment
-require_once('../dragonprojects/blog/wp-load.php');
+require_once(getenv('WORDPRESS_PATH') . '/wp-load.php');
 
 // get the last published post
 $publish = get_posts(['numberposts' => 1, 'orderby' => 'post_date', 'order' => 'DESC', 'post_status' => 'publish'])[0];
