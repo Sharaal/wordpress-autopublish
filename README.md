@@ -1,5 +1,5 @@
 # Wordpress Autopublish
-Cron script to automatically publish the earliest pending post if there is no published post in defined interval
+CronScript to automatically publish the earliest pending post if there is no published post in defined interval
 
 ## Installation
 - Git clone the repository [wordpress-autopublish](https://github.com/dragonprojects/wordpress-autopublish.git)
@@ -8,3 +8,4 @@ Cron script to automatically publish the earliest pending post if there is no pu
 SetEnv INTERVAL 604800
 SetEnv WORDPRESS_PATH path/to/the/wordpress/installation
 ```
+- Define a CronJob for this CronScript
