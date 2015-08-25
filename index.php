@@ -1,5 +1,5 @@
 <?php
-// outputformat: text/plain
+// define the output format
 header('Content-Type:text/plain');
 
 // load the wordpress environment
